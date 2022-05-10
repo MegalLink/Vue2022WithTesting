@@ -1,7 +1,9 @@
 <template>
   <div class="container-counter">
-    <h2>{{ getTitle }}</h2>
-    <p>{{ counter }} <sup>2</sup> = {{ getSquareCounter }}</p>
+    <h2 test-id="title">{{ getTitle }}</h2>
+    <p>
+      <span>{{ counter }}</span> <sup>2</sup> = {{ getSquareCounter }}
+    </p>
     <button class="btn" @click="increase">+1</button>
     <button class="btn" @click="decrease">-1</button>
   </div>
@@ -13,7 +15,7 @@ export default {
     title: String,
     start: {
       type: Number,
-      required: true,
+      //required: true,
       default: 10,
       validator(value) {
         return value > 5;

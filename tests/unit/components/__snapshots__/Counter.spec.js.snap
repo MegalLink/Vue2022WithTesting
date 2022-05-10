@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Counter components should match snapshot 1`] = `
+<div class="container-counter">
+  <h2 test-id="title">Counter</h2>
+  <p><span>10</span> <sup>2</sup> = 100</p><button class="btn">+1</button><button class="btn">-1</button>
+</div>
+`;
