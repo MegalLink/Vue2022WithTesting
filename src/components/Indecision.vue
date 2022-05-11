@@ -22,28 +22,33 @@ export default {
   },
   methods: {
     async getAnswer() {
-      this.answer = "Pensando....";
-      const { answer, image } = await fetch("https://yesno.wtf/api").then((r) =>
-        r.json()
-      );
-      console.log(answer);
-      switch (answer) {
-        case "yes":
-          this.answer = "Si :D";
-          break;
-        case "no":
-          this.answer = "No :(";
-          break;
-        default:
-          this.answer = "No sé ._.";
-      }
+      try {
+        this.answer = "Pensando....";
+        const { answer, image } = await fetch("https://yesno.wtf/api").then(
+          (r) => r.json()
+        );
+        switch (answer) {
+          case "yes":
+            this.answer = "Si :D";
+            break;
+          case "no":
+            this.answer = "No :(";
+            break;
+          default:
+            this.answer = "No sé ._.";
+        }
 
-      this.img = image;
+        this.img = image;
+      } catch (error) {
+        this.answer = "No hay respues del API";
+        this.img = null;
+      }
     },
   },
   watch: {
     question(newVal, _) {
       this.isValidQuestion = false;
+      console.log(newVal);
       if (newVal.includes("?")) {
         this.getAnswer();
         this.isValidQuestion = true;

@@ -24,10 +24,10 @@ module.exports = {
   collectCoverageFrom: ["**/*.{js,vue}", "!**/node_modules/**"],
   coverageThreshold: {
     global: {
-      //branches: 80,
-      functions: 30,
-      //lines: 80,
-      //statements: -10,
+      branches: 100,
+      functions: 100,
+      lines: 100,
+      statements: 100,
     },
   },
 };

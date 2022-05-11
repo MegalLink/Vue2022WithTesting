@@ -1,6 +1,6 @@
 import Counter from "@/components/Counter";
 import { shallowMount } from "@vue/test-utils";
-describe("Counter components", () => {
+describe("Counter component", () => {
   let wrapper;
   let buttons;
   beforeEach(() => {
@@ -17,7 +17,7 @@ describe("Counter components", () => {
     expect(h2.text()).toBe("Counter");
   });
 
-  it("should render have default counter value '10'", () => {
+  it("should have default counter value '10'", () => {
     let span = wrapper.find("span");
     expect(span.text()).toBe("10");
   });
@@ -32,5 +32,17 @@ describe("Counter components", () => {
     await buttons[1].trigger("click");
     let counterText = wrapper.find("span").text();
     expect(counterText).toBe("9");
+  });
+
+  it("should get default value of start property", async () => {
+    //    const start = wrapper.props("start")
+    const { start } = wrapper.props();
+    expect(start).toBe(10);
+  });
+
+  it("should set value of title property", async () => {
+    const wrapper = shallowMount(Counter, { props: { title: "Hola mundo" } });
+    let h2 = wrapper.find('[test-id="title"]');
+    expect(h2.text()).toBe("Hola mundo");
   });
 });
