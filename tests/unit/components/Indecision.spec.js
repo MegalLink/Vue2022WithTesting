@@ -15,20 +15,18 @@ describe("Indecision Component", () => {
   });
 
   function setMockFetch(response = null, isOk = false) {
-    return () => {
-      if (isOk) {
-        return Promise.resolve({
-          json: () => Promise.resolve(response),
-        });
-      } else {
-        return Promise.reject({
-          json: () =>
-            Promise.reject({
-              statusCode: 500,
-            }),
-        });
-      }
-    };
+    if (isOk) {
+      return {
+        json: () => Promise.resolve(response),
+      };
+    } else {
+      return {
+        json: () =>
+          Promise.reject({
+            statusCode: 500,
+          }),
+      };
+    }
   }
 
   it("should match snapshot", () => {
@@ -59,7 +57,7 @@ describe("Indecision Component", () => {
   it("should return reponse when getAnswer method is called and answer is yes", async () => {
     const urlImage = "urlimage";
     const apiResponse = { answer: "yes", forced: false, image: urlImage };
-    fetch.mockImplementationOnce(setMockFetch(apiResponse, true));
+    fetch.mockResolvedValue(setMockFetch(apiResponse, true));
     await wrapper.vm.getAnswer();
     const img = wrapper.find("img");
     expect(wrapper.vm.img).toBe(urlImage);
@@ -70,7 +68,7 @@ describe("Indecision Component", () => {
   it("should return reponse when getAnswer method is called and answer is no", async () => {
     const urlImage = "urlimage";
     const apiResponse = { answer: "no", forced: false, image: urlImage };
-    fetch.mockImplementationOnce(setMockFetch(apiResponse, true));
+    fetch.mockResolvedValue(setMockFetch(apiResponse, true));
     await wrapper.vm.getAnswer();
     const img = wrapper.find("img");
     expect(wrapper.vm.img).toBe(urlImage);
@@ -85,7 +83,7 @@ describe("Indecision Component", () => {
       forced: false,
       image: urlImage,
     };
-    fetch.mockImplementationOnce(setMockFetch(apiResponse, true));
+    fetch.mockResolvedValue(setMockFetch(apiResponse, true));
     await wrapper.vm.getAnswer();
     const img = wrapper.find("img");
     expect(wrapper.vm.img).toBe(urlImage);
@@ -94,7 +92,7 @@ describe("Indecision Component", () => {
   });
 
   it("should return error when getAnswer method is called", async () => {
-    fetch.mockImplementationOnce(setMockFetch());
+    fetch.mockRejectedValue(setMockFetch());
     await wrapper.vm.getAnswer();
     const img = wrapper.find("img");
     expect(wrapper.vm.img).toBe(null);
